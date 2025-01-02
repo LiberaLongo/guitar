@@ -7,13 +7,20 @@
 #define DIM 5
 //#define DEBUG
 
-char  do_C [] = {'1', '8', 't', 's', 'l', 'm'};
-char  re_D [] = {'2', '9', 'y', 'd', 'z'};
-char  mi_E [] = {'3', '0', 'u', 'f', 'x'};
-char  fa_F [] = {'4', 'q', 'i', 'g', 'c'};
-char sol_G [] = {'5', 'w', 'o', 'h', 'v'};
-char  la_A [] = {'6', 'e', 'p', 'j', 'b'};
-char  si_B [] = {'7', 'r', 'a', 'k', 'n'};
+//white keys
+const char  do_C [] = {'1', '8', 't', 's', 'l', 'm'};
+const char  re_D [] = {'2', '9', 'y', 'd', 'z'};
+const char  mi_E [] = {'3', '0', 'u', 'f', 'x'};
+const char  fa_F [] = {'4', 'q', 'i', 'g', 'c'};
+const char sol_G [] = {'5', 'w', 'o', 'h', 'v'};
+const char  la_A [] = {'6', 'e', 'p', 'j', 'b'};
+const char  si_B [] = {'7', 'r', 'a', 'k', 'n'};
+//black keys
+const char  do_C_diesis [] = {'!', '*', 'T', 'S', 'L'};
+const char  re_D_diesis [] = {'@', '(', 'Y', 'D', 'Z'};
+const char  fa_F_diesis [] = {'$', 'Q', 'I', 'G', 'C'};
+const char sol_G_diesis [] = {'%', 'W', 'O', 'H', 'V'};
+const char  la_A_diesis [] = {'^', 'E', 'P', 'J', 'B'};
 
 char* addCharacterToString(char* str, char c) {
     int length = 0;
@@ -36,7 +43,8 @@ void virtualpianotolilypond(char c, int output) {
 	//translate to lilypond
         char note;
 	char *translation = NULL;
-        int i, j, found = 0; //boolean
+        int i, j;
+	int found = 0, black = 0; //boolean
         switch (c) {
                 case ' ':
 			note = c;
@@ -52,13 +60,19 @@ void virtualpianotolilypond(char c, int output) {
                         break;
                 default:
 			//really a note
+			//white keys, black keys
                         for(i=0; i < DIM; i++) {
                                 if(c == do_C[i])       { note = 'c'; found = 1; }
+				else if(c ==  do_C_diesis[i]) { note = 'c'; found = 1; black = 1; }
                                 else if(c ==  re_D[i]) { note = 'd'; found = 1; }
+				else if(c ==  re_D_diesis[i]) { note = 'd'; found = 1; black = 1; }
                                 else if(c ==  mi_E[i]) { note = 'e'; found = 1; }
                                 else if(c ==  fa_F[i]) { note = 'f'; found = 1; }
+				else if(c ==  fa_F_diesis[i]) { note = 'f'; found = 1; black = 1; }
                                 else if(c == sol_G[i]) { note = 'g'; found = 1; }
+				else if(c == sol_G_diesis[i]) { note = 'g'; found = 1; black = 1; }
                                 else if(c ==  la_A[i]) { note = 'a'; found = 1; }
+				else if(c ==  la_A_diesis[i]) { note = 'a'; found = 1; black = 1; }
                                 else if(c ==  si_B[i]) { note = 'b'; found = 1; }
                                 if(found) break;
                         }
@@ -71,6 +85,11 @@ void virtualpianotolilypond(char c, int output) {
         printf(" -> %c", note);
 #endif
 	translation = addCharacterToString(translation, note);
+	//add -is for diesis (black keys only)
+	if(black) {
+		translation = addCharacterToString(translation, 'i');
+		translation = addCharacterToString(translation, 's');
+	}
 	//add , or ' to the translation depending on the octave
 	if(found) {
 		j = i - 2;
