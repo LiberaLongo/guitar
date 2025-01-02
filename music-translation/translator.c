@@ -15,15 +15,16 @@ char sol_G [] = {'5', 'w', 'o', 'h', 'v'};
 char  la_A [] = {'6', 'e', 'p', 'j', 'b'};
 char  si_B [] = {'7', 'r', 'a', 'k', 'n'};
 
-//funzione copiata da
-// https://www.quora.com/How-can-you-add-a-character-to-a-string-in-C
-char* addCharacterToString(const char* str, char c) {
-    int length = strlen(str);
-    char* modifiedString = (char*)malloc((length + 2) * sizeof(char)); // Allocate memory for modified string
-    strcpy(modifiedString, str); // Copy existing string
-    modifiedString[length] = c; // Add character to the end
-    modifiedString[length + 1] = '\0'; // Add null terminator
-    return modifiedString;
+char* addCharacterToString(char* str, char c) {
+    int length = 0;
+
+    if (str != NULL)
+	    length = strlen(str);
+
+    str = realloc(str, length + 2); // Allocate memory for modified string
+    str[length] = c; // Add character to the end
+    str[length + 1] = '\0'; // Add null terminator
+    return str;
 }
 
 void lilypondtovirtualpiano(char c, int output) {
@@ -34,7 +35,7 @@ void lilypondtovirtualpiano(char c, int output) {
 void virtualpianotolilypond(char c, int output) {
 	//translate to lilypond
         char note;
-	char *translation = "";
+	char *translation = NULL;
         int i, j, found = 0; //boolean
         switch (c) {
                 case ' ':
@@ -62,7 +63,7 @@ void virtualpianotolilypond(char c, int output) {
                                 if(found) break;
                         }
                         //the only exception (last key of the piano)
-                        if( c == do_C[DIM]) { note = 'c'; i = DIM; found = 1;}
+                        if( c == do_C[DIM]) { note = 'c'; i = DIM; found = 1; }
                         break;
         }
         //write the translation
@@ -76,27 +77,36 @@ void virtualpianotolilypond(char c, int output) {
 #ifdef DEBUG
 		printf(" ( i = %d, j = %d ) ", i, j);
 #endif
-		if (j < 0) for (; j < 0; j++)
-			{ translation = addCharacterToString(translation, ','); }
-		else if (j > 0) for (; j > 0; j--)
-			{ translation = addCharacterToString(translation, '\''); }
+		if (j < 0) for (; j < 0; j++) {
+			translation = addCharacterToString(translation, ',');
+		}
+		else if (j > 0) for (; j > 0; j--) {
+			translation = addCharacterToString(translation, '\'');
+		}
 	}
 #ifdef DEBUG
 	printf(" -> %s\n", translation);
 #endif
-	printf("%s", translation);
-        write (output, translation, strlen(translation)) ;
+	if (translation != NULL) {
+		printf("%s", translation);
+		write (output, translation, strlen(translation)) ;
+	}
+
+	free(translation);
 }
 
 int my_read(void (*fun)(char, int), FILE *input, int output) {
 	//read virtualpiano music
 	//read lilypond music
-	char *line;
-	size_t linelen;
+	size_t linelen = 0;
+	char *line = NULL;
 	while(1) {
 		//read a line
 		int l = getline(&line, &linelen, input);
 		if ( l<= 0 ) {
+			free(line);
+			line = NULL;
+			linelen = 0;
 			printf("\ngetline <= 0\n");
 			break;
 		}
@@ -110,6 +120,10 @@ int my_read(void (*fun)(char, int), FILE *input, int output) {
 			//call the FUNCTION with his parameters
 			(*fun)(*scan, output);
 		} write(output, "\n", 1);
+
+		free(line);
+		line = NULL;
+		linelen = 0;
 	}
 	return 0;
 }
