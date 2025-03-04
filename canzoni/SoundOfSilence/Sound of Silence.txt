@@ -62,10 +62,7 @@ Still remains
 Within the sound of silence
 
 
-[Verse 2] |Am|G|G|Am|
-          |F C|C|F C|C-|
-           |F|F|C|C Am|
-           |C-|G|Am|Am|
+[Verse 2]    |Am|G|G|Am|    |F C|C|F C|C-|    |F|F|C|C Am|    |C-|G|Am|Am|
 
 Am                               G
      In restless dreams I walked alone
@@ -83,10 +80,7 @@ That split the night
 And touched the sound of silence
  
 
-[Verse 3]   |G|Am|Am|G|
-           |F C|C|F C|C|
-           |F|F|C|C Am|
-           |C-|G|Am|Am|
+[Verse 3]    |Am|G|G|Am|    |F C|C|F C|C|    |F|F|C|C Am|    |C-|G|Am|Am|
 
 Am                              G
       And in the naked light I saw
@@ -104,10 +98,7 @@ And no one dared
 Disturb the sound of silence
  
 
-[Verse 4]   |G|Am|Am|G|
-          |F C|C|F C|C-|
-           |F|F|C|C Am|
-           |C|G|Am|Am|
+[Verse 4]    |Am|G|G|Am|    |F C|C|F C|C-|    |F|F|C|C Am|    |C|G|Am|Am|
 
 Am                                  G
      "Fools", said I, "You do not know
@@ -125,10 +116,7 @@ And echoed
 In the wells of silence
  
 
-[Verse 5]   |G|Am|Am|G|
-          |F C|C|F C|C|
-           |F|F|C|C Am|
-           |C|G|Outro Riff|
+[Verse 5]    |Am|G|G|Am|    |F C|C|F C|C|    |F|F|C|C Am|    |C|G|Outro Riff|
 
 Am                               G
       And the people bowed and prayed
@@ -156,4 +144,3 @@ D|-----------------|-----------------|-----------------|-2-------|
 A|-----------------|-----------------|-----------------|-0-------|
 E|-----------------|-----------------|-----------------|---------|
                                                         (sweep upwards)
-
